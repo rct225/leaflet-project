@@ -1,0 +1,48 @@
+---
+title: "Yelp Reviews of Wineries near Yountville, CA"
+author: "Robert Tuck"
+date: "11/9/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(leaflet)
+
+wineryCoordinates <- read.csv(file="./yountville_winery_coords.csv", header = TRUE, sep = ",")
+
+wineryYelpSites <- scan(file="./yountville_winery_links.csv", what = character(), sep = "\n")
+
+wineryIcon <- makeIcon(
+  iconUrl = "http://robertctuck.com/leaflet-project/wine_glass.png",
+  iconWidth = 31*215/230, iconHeight = 31,
+  iconAnchorX = 31*215/230/2, iconAnchorY = 16
+)
+
+wineryCoordinates %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = wineryIcon, popup = wineryYelpSites)
+```
+
+### Code (if you're interested)
+```{r, eval=FALSE}
+library(leaflet)
+
+wineryCoordinates <- read.csv(file="./yountville_winery_coords.csv", header = TRUE, sep = ",")
+
+wineryYelpSites <- scan(file="./yountville_winery_links.csv", what = character(), sep = "\n")
+
+wineryIcon <- makeIcon(
+  iconUrl = "http://robertctuck.com/leaflet-project/wine_glass.png",
+  iconWidth = 31*215/230, iconHeight = 31,
+  iconAnchorX = 31*215/230/2, iconAnchorY = 16
+)
+
+wineryCoordinates %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = wineryIcon, popup = wineryYelpSites)
